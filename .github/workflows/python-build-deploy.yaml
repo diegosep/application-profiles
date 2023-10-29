@@ -18,6 +18,7 @@ jobs:
         run: |
           make install-poetry
           make install
+          poetry shell
       
       - name: Security Validation
         run: make security

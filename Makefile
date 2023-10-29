@@ -22,32 +22,32 @@ remove-env:
 	rm -rf .venv && poetry env remove --all
 
 .PHONY: clean
-clean:			## Clean unused files.
+clean:
 	@python setup.py clean --build --dist --eggs --pycache
 	@rm -rf reports/ || true
 	@rm -f .coverage || true
 
 .PHONY: lint
-lint:			## Run pylint.
+lint:
 	mkdir reports || true
 	pylint --output-format=json:reports/lint-report.json --reports=y --exit-zero application_profiles/*.py
 
 .PHONY: test
-test:			## Run tests and coverage
+test:
 	mkdir reports || true
 	pytest --junitxml=reports/junit.xml tests
 
 .PHONY: security
-security:		## Run dependency security check
+security:
 	poetry export --without-hashes -f requirements.txt | safety check --full-report --stdin
 	mkdir reports || true
 	safety check -r requirements.txt --output screen
 	rm -rf requirements.txt
 
 .PHONY: build
-build:			## Build locally the python artifact
+build:
 	python setup.py sdist bdist_wheel
 
 .PHONY: upload
 upload:
-	python -m twine upload --repository deliverlitics-registry-python dist/*
+	python -m twine upload --repository the_repo dist/*
