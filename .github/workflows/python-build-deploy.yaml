@@ -9,14 +9,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
           cache: 'pip'
+      - name: Run image
+        uses: abatilo/actions-poetry@v2
+      
       - name: Install dependencies
         run: |
-          make install-poetry
           make install
           source $(poetry env info --path)/bin/activate
       
