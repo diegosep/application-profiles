@@ -13,6 +13,7 @@ fmt:
 
 .PHONY: install
 install:
+	pip install poetry
 	poetry config virtualenvs.in-project true
 	poetry install
 	echo "Run 'poetry shell' to enable the environment"
