@@ -44,10 +44,18 @@ security:
 	poetry run safety check -r requirements.txt --output screen
 	rm -rf requirements.txt
 
-.PHONY: build
+.PHONY: publish-prerelease
 build:
-	poetry build --format sdist 
+	poetry version prerelease
+	poetry config repositories.test-pypi https://test.pypi.org/legacy/
+	poetry config pypi-token.test-pypi $PYPI_PASSWORD
+	poetry build --format sdist
+	poetry publish --repository test-pypi
 
-.PHONY: upload
-upload:
-	poetry publish --dry-run
+.PHONY: publish-release
+build:
+	poetry version minor
+	poetry config repositories.pypi https://pypi.org/legacy/
+	poetry config pypi-token.pypi $PYPI_PASSWORD
+	poetry build --format sdist
+	poetry publish --repository test-pypi

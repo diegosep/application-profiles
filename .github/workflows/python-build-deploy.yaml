@@ -37,7 +37,9 @@ jobs:
           path: reports/junit.xml
       
       - name: Upload Artifact
-        
+        env:
+          PYPI_USERNAME: ${{ secrets.PYPI_USERNAME }}
+          PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         run: | 
-          make build
+          make publish-prerelease
           make upload
