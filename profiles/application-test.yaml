@@ -1,0 +1,14 @@
+NAME: test
+depth_1:
+  depth_2:
+    int: 1
+    float: 1.1
+    bool: True
+    string: 'string'
+    list: 
+      - 1
+      - 2
+    map:
+      key1: value1
+      key2: value2
+    no_exists_on_default: simple

@@ -1,0 +1,14 @@
+NAME: default
+depth_1:
+  depth_2:
+    int: 3
+    float: 4.4
+    bool: False
+    string: 'not string'
+    list: 
+      - 0
+      - 3
+    map:
+      key1: value5
+      key2: value6
+    no_exists_on_env: simple
