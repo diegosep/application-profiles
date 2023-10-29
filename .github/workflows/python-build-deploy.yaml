@@ -18,7 +18,7 @@ jobs:
         run: |
           make install-poetry
           make install
-          poetry shell
+          source $(poetry env info --path)/bin/activate
       
       - name: Security Validation
         run: make security
