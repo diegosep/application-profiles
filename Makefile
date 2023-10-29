@@ -35,7 +35,7 @@ lint:
 .PHONY: test
 test:
 	mkdir reports || true
-	pytest --junitxml=reports/junit.xml tests
+	poetry run pytest --junitxml=reports/junit.xml tests
 
 .PHONY: security
 security:
