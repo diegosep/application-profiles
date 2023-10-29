@@ -4,7 +4,7 @@ USING_POETRY=$(shell grep "tool.poetry" pyproject.toml && echo "yes")
 
 .PHONY: install-poetry
 install-poetry:		
-	curl -sSL https://install.python-poetry.org | python3 -	
+	pip install poetry
 
 .PHONY: fmt
 fmt:
@@ -13,7 +13,6 @@ fmt:
 
 .PHONY: install
 install:
-	pip install poetry
 	poetry config virtualenvs.in-project true
 	poetry install
 	echo "Run 'poetry shell' to enable the environment"
@@ -40,8 +39,10 @@ test:			## Run tests and coverage
 
 .PHONY: security
 security:		## Run dependency security check
+	poetry export --without-hashes -f requirements.txt | safety check --full-report --stdin
 	mkdir reports || true
 	safety check -r requirements.txt --output screen
+	rm -rf requirements.txt
 
 .PHONY: build
 build:			## Build locally the python artifact
