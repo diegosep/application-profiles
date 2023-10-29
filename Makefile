@@ -41,13 +41,13 @@ test:
 security:
 	poetry export --without-hashes -f requirements.txt | safety check --full-report --stdin
 	mkdir reports || true
-	safety check -r requirements.txt --output screen
+	poetry run safety check -r requirements.txt --output screen
 	rm -rf requirements.txt
 
 .PHONY: build
 build:
-	python setup.py sdist bdist_wheel
+	poetry build --format sdist 
 
 .PHONY: upload
 upload:
-	python -m twine upload --repository the_repo dist/*
+	poetry publish --dry-run
