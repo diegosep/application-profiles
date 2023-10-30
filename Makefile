@@ -48,9 +48,10 @@ security:
 .PHONY: publish-prerelease
 publish-prerelease:
 	poetry version prerelease
-	poetry config repositories.test-pypi https://test.pypi.org/legacy/
+	poetry config repositories.testpypi https://test.pypi.org/legacy/
+	poetry config pypi-token.testpypi ${PYPI_PASSWORD}
 	poetry build --format sdist
-	poetry publish --repository test-pypi -u $PYPI_USERNAME -p $PYPI_PASSWORD
+	poetry publish --repository testpypi
 
 .PHONY: publish-release
 publish-release:
