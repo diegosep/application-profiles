@@ -50,7 +50,7 @@ publish-prerelease:
 	poetry version prerelease
 	poetry config repositories.test-pypi https://test.pypi.org/legacy/
 	poetry build --format sdist
-	poetry publish --repository test-pypi -u ${PYPI_USERNAME} -p ${PYPI_PASSWORD}
+	poetry publish --repository test-pypi -u $PYPI_USERNAME -p $PYPI_PASSWORD
 
 .PHONY: publish-release
 publish-release:
