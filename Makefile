@@ -39,6 +39,7 @@ test:
 
 .PHONY: security
 security:
+	poetry lock
 	poetry export --without-hashes -f requirements.txt
 	mkdir reports || true
 	poetry run safety check -r requirements.txt --output screen
@@ -48,14 +49,13 @@ security:
 publish-prerelease:
 	poetry version prerelease
 	poetry config repositories.test-pypi https://test.pypi.org/legacy/
-	poetry config http-basic.test-pypi
 	poetry build --format sdist
-	poetry publish --repository test-pypi -u $PYPI_USERNAME -p $PYPI_PASSWORD
+	poetry publish --repository test-pypi -u ${PYPI_USERNAME} -p ${PYPI_PASSWORD}
 
 .PHONY: publish-release
 publish-release:
 	poetry version minor
 	poetry config repositories.pypi https://pypi.org/legacy/
-	poetry config pypi-token.pypi $PYPI_PASSWORD
+	poetry config pypi-token.pypi ${PYPI_PASSWORD}
 	poetry build --format sdist
 	poetry publish --repository test-pypi
