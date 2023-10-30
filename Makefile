@@ -43,14 +43,12 @@ security:
 publish-prerelease:
 	poetry version prerelease
 	poetry build --format wheel
-	poetry config repositories.testpypi https://pypi.org/legacy/
-	poetry config pypi-token.testpypi ${PYPI_PASSWORD}
-	poetry publish --repository testpypi
+	poetry config pypi-token.pypi ${PYPI_PASSWORD}
+	poetry publish
 
 .PHONY: publish-release
 publish-release:
 	poetry version minor
-	poetry config repositories.pypi https://pypi.org/legacy/
 	poetry config pypi-token.pypi ${PYPI_PASSWORD}
 	poetry build --format sdist
-	poetry publish --repository pypi
+	poetry publish
