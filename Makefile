@@ -21,16 +21,10 @@ install:
 remove-env:
 	rm -rf .venv && poetry env remove --all
 
-.PHONY: clean
-clean:
-	@python setup.py clean --build --dist --eggs --pycache
-	@rm -rf reports/ || true
-	@rm -f .coverage || true
-
 .PHONY: lint
 lint:
 	mkdir reports || true
-	pylint --output-format=json:reports/lint-report.json --reports=y --exit-zero application_profiles/*.py
+	poetry run pylint --output-format=json:reports/lint-report.json --reports=y --exit-zero application_profiles/*.py
 
 .PHONY: test
 test:
@@ -48,9 +42,9 @@ security:
 .PHONY: publish-prerelease
 publish-prerelease:
 	poetry version prerelease
-	poetry config repositories.testpypi https://test.pypi.org/legacy/
+	poetry build --format wheel
+	poetry config repositories.testpypi https://pypi.org/legacy/
 	poetry config pypi-token.testpypi ${PYPI_PASSWORD}
-	poetry build --format sdist
 	poetry publish --repository testpypi
 
 .PHONY: publish-release
@@ -59,4 +53,4 @@ publish-release:
 	poetry config repositories.pypi https://pypi.org/legacy/
 	poetry config pypi-token.pypi ${PYPI_PASSWORD}
 	poetry build --format sdist
-	poetry publish --repository test-pypi
+	poetry publish --repository pypi

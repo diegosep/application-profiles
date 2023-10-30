@@ -38,7 +38,7 @@ class ApplicationProfiles:
             ApplicationProfilesEnum.PROFILES_SEPARATOR.value
         )
         if ApplicationProfilesEnum.DEFAULT_PROFILE.value not in profile_list:
-            profile_list.insert(0,ApplicationProfilesEnum.DEFAULT_PROFILE.value)
+            profile_list.insert(0, ApplicationProfilesEnum.DEFAULT_PROFILE.value)
         return profile_list
 
     def __validate_profiles_module(self) -> None:

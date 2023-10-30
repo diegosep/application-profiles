@@ -34,7 +34,14 @@ jobs:
           name: pytest-results
           path: reports/junit.xml
       
-      - name: Publish Prerelese
+      - name: Publish Prerelease
+        if: github.ref != 'refs/heads/main'
+        env:
+          PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+        run: make publish-prerelease
+      
+      - name: Publish Release
+        if: github.ref == 'refs/heads/main'
         env:
           PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         run: make publish-prerelease
