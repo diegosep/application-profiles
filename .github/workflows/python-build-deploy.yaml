@@ -34,7 +34,7 @@ jobs:
           name: pytest-results
           path: reports/junit.xml
       
-      - name: Upload Artifact
+      - name: Publish Prerelese
         env:
           PYPI_USERNAME: ${{ secrets.PYPI_USERNAME }}
           PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}

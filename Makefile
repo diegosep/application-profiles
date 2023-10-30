@@ -40,7 +40,7 @@ test:
 .PHONY: security
 security:
 	poetry lock
-	poetry export --without-hashes -f requirements.txt
+	poetry export --without-hashes --format=requirements.txt > requirements.txt
 	mkdir reports || true
 	poetry run safety check -r requirements.txt --output screen
 	rm -rf requirements.txt || true
