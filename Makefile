@@ -35,22 +35,22 @@ lint:
 .PHONY: test
 test:
 	mkdir reports || true
-	poetry run pytest --junitxml=reports/junit.xml tests
+	poetry run pytest --cov=application_profiles --junitxml=reports/junit.xml tests
 
 .PHONY: security
 security:
-	poetry export --without-hashes -f requirements.txt | safety check --full-report --stdin
+	poetry export --without-hashes -f requirements.txt
 	mkdir reports || true
 	poetry run safety check -r requirements.txt --output screen
-	rm -rf requirements.txt
+	rm -rf requirements.txt || true
 
 .PHONY: publish-prerelease
 publish-prerelease:
 	poetry version prerelease
 	poetry config repositories.test-pypi https://test.pypi.org/legacy/
-	poetry config pypi-token.test-pypi $PYPI_PASSWORD
+	poetry config http-basic.test-pypi
 	poetry build --format sdist
-	poetry publish --repository test-pypi
+	poetry publish --repository test-pypi -u $PYPI_USERNAME -p $PYPI_PASSWORD
 
 .PHONY: publish-release
 publish-release:

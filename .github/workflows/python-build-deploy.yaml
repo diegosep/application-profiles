@@ -19,9 +19,7 @@ jobs:
         uses: abatilo/actions-poetry@v2
       
       - name: Install dependencies
-        run: |
-          make install
-          source $(poetry env info --path)/bin/activate
+        run: make install
       
       - name: Security Validation
         run: make security
