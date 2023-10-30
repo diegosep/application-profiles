@@ -40,6 +40,4 @@ jobs:
         env:
           PYPI_USERNAME: ${{ secrets.PYPI_USERNAME }}
           PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-        run: | 
-          make publish-prerelease
-          make upload
+        run: make publish-prerelease

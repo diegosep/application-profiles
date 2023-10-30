@@ -45,7 +45,7 @@ security:
 	rm -rf requirements.txt
 
 .PHONY: publish-prerelease
-build:
+publish-prerelease:
 	poetry version prerelease
 	poetry config repositories.test-pypi https://test.pypi.org/legacy/
 	poetry config pypi-token.test-pypi $PYPI_PASSWORD
@@ -53,7 +53,7 @@ build:
 	poetry publish --repository test-pypi
 
 .PHONY: publish-release
-build:
+publish-release:
 	poetry version minor
 	poetry config repositories.pypi https://pypi.org/legacy/
 	poetry config pypi-token.pypi $PYPI_PASSWORD
