@@ -10,10 +10,14 @@ on:
 
 jobs:
   python-release:
-  
     runs-on: ubuntu-latest
-
     steps:      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+      
       - name: Publish PreRelease
         if: github.ref != 'refs/heads/main'
         env:
