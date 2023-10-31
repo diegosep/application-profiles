@@ -33,9 +33,8 @@ jobs:
           name: pytest-results
           path: reports/junit.xml
       
-      - name: Release
-       # if: github.ref != 'refs/heads/main'
-        uses: ./.github/workflows/python-release.yaml
-        with:
-          CICD_GIT_TOKEN: ${{ secrets.CICD_GIT_TOKEN }}
-          PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+  python-release:
+    uses: ./.github/workflows/python-release.yaml
+    with:
+      CICD_GIT_TOKEN: ${{ secrets.CICD_GIT_TOKEN }}
+      PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
