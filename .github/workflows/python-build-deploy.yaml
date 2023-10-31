@@ -37,7 +37,7 @@ jobs:
       
       - name: Release
        # if: github.ref != 'refs/heads/main'
-        uses: .github/workflows/python-release.yaml
+        uses: ./.github/workflows/python-release.yaml
         secrets:
           CICD_GIT_TOKEN: ${{ secrets.CICD_GIT_TOKEN }}
           PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
