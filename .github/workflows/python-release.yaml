@@ -1,0 +1,47 @@
+name: Python Release
+
+on:
+  workflow_call:
+    secrets:
+      PYPI_PASSWORD:
+        required: true
+      CICD_GIT_TOKEN:
+        required: true
+
+jobs:
+  python-release:
+  
+    runs-on: ubuntu-latest
+
+    steps:      
+      - name: Publish PreRelease
+        if: github.ref != 'refs/heads/main'
+        env:
+          PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+        run: make publish-prerelease
+      
+      - name: Publish Release
+        if: github.ref == 'refs/heads/main'
+        env:
+          PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+        run: make publish-release
+      
+      - name: Configure git
+      #  if: github.ref == 'refs/heads/main'
+        run: |
+          git config --global user.name 'CICD'
+          git config --global user.email 'actions@github.com'
+      - name: bump release version and tag
+      #  if: github.ref == 'refs/heads/main'
+        run: |
+          export NEW_VERSION=v$(poetry version -s)
+          git commit -am "Bumping to version $NEW_VERSION"
+          git tag -a $NEW_VERSION -m $NEW_VERSION
+      - name: prepatch to the next version
+        run: |
+          export NEW_VERSION=v$(poetry version -s)
+          git commit -am "Prepatching to $NEW_VERSION"
+      - name: Push results
+        run: |
+          git push "https://$GITHUB_ACTOR:${{ secrets.CICD_GIT_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
+          git push "https://$GITHUB_ACTOR:${{ secrets.CICD_GIT_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tags

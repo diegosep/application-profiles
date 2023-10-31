@@ -15,6 +15,7 @@ jobs:
         with:
           python-version: '3.10'
           cache: 'pip'
+      
       - name: Run image
         uses: abatilo/actions-poetry@v2
       
@@ -34,14 +35,9 @@ jobs:
           name: pytest-results
           path: reports/junit.xml
       
-      - name: Publish Prerelease
-        if: github.ref != 'refs/heads/main'
-        env:
+      - name: Release
+       # if: github.ref != 'refs/heads/main'
+        uses: .github/workflows/python-release.yaml
+        secrets:
+          CICD_GIT_TOKEN: ${{ secrets.CICD_GIT_TOKEN }}
           PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-        run: make publish-prerelease
-      
-      - name: Publish Release
-        if: github.ref == 'refs/heads/main'
-        env:
-          PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-        run: make publish-prerelease
