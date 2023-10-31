@@ -44,6 +44,7 @@ jobs:
         run: |
           git config --global user.name 'CICD'
           git config --global user.email 'actions@github.com'
+          git push
       - name: bump release version and tag
       #  if: github.ref == 'refs/heads/main'
         run: |
