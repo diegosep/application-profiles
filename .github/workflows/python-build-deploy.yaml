@@ -35,6 +35,6 @@ jobs:
       
   python-release:
     uses: ./.github/workflows/python-release.yaml
-    with:
+    secrets:
       CICD_GIT_TOKEN: ${{ secrets.CICD_GIT_TOKEN }}
       PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
