@@ -51,8 +51,9 @@ jobs:
           export NEW_VERSION=v$(poetry version -s)
           git commit -am "Bumping to version $NEW_VERSION"
           git tag -a $NEW_VERSION -m $NEW_VERSION
-      - name: prepatch to the next version
+      - name: Preparing to the next version
         run: |
+          poetry version prepatch
           export NEW_VERSION=v$(poetry version -s)
           git commit -am "Prepatching to $NEW_VERSION"
       - name: Push results
