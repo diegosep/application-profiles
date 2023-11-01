@@ -49,6 +49,6 @@ publish-prerelease:
 .PHONY: publish-release
 publish-release:
 	poetry version minor
-	poetry config pypi-token.pypi ${PYPI_PASSWORD}
 	poetry build --format sdist
+	poetry config pypi-token.pypi ${PYPI_PASSWORD}
 	poetry publish

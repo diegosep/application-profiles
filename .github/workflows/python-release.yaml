@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.CICD_GIT_TOKEN }}
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -40,22 +42,23 @@ jobs:
         run: make publish-release
       
       - name: Configure git
-      #  if: github.ref == 'refs/heads/main'
         run: |
           git config --global user.name 'CICD'
           git config --global user.email 'actions@github.com'
           git push
+      
       - name: bump release version and tag
-      #  if: github.ref == 'refs/heads/main'
         run: |
-          export NEW_VERSION=v$(poetry version -s)
-          git commit -am "Bumping to version $NEW_VERSION"
+          export NEW_VERSION=$(poetry version -s)
+          git commit -am "[skip ci] Bumping to version $NEW_VERSION"
           git tag -a $NEW_VERSION -m $NEW_VERSION
-          git push "https://$GITHUB_ACTOR:${{ secrets.CICD_GIT_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
-          git push "https://$GITHUB_ACTOR:${{ secrets.CICD_GIT_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tags
+      
       - name: Preparing to the next version
         run: |
-          poetry version prepatch
-          export NEW_VERSION=v$(poetry version -s)
-          git commit -am "Prepatching to $NEW_VERSION"
+          export NEW_VERSION=$(poetry version -s)
+          git commit -am "[skip ci] Prepatching to $NEW_VERSION"
+      
+      - name: Push results
+        run: |
           git push "https://$GITHUB_ACTOR:${{ secrets.CICD_GIT_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
+          git push "https://$GITHUB_ACTOR:${{ secrets.CICD_GIT_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tags
