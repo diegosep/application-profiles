@@ -3,8 +3,6 @@ name: Python Release
 on:
   workflow_call:
     secrets:
-      PYPI_PASSWORD:
-        required: true
       CICD_GIT_TOKEN:
         required: true
 
