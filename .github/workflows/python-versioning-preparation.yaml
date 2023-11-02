@@ -27,7 +27,7 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: poetry version minor
 
-      - uses: actions/upload-artifact@3
+      - uses: actions/upload-artifact@v3
         with:
           name: pyproject
           path: pyproject.toml
