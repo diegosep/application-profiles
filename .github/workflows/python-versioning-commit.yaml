@@ -30,12 +30,7 @@ jobs:
           git config --global user.email 'actions@github.com'
           git push
       
-      - name: Bump release version
-        run: |
-          export NEW_VERSION=$(poetry version -s)
-          git commit -am "[skip ci] Bumping to version $NEW_VERSION"
-      
-      - name: Preparing to the next version
+      - name: Commiting Version
         run: |
           export NEW_VERSION=$(poetry version -s)
           git commit -am "[skip ci] PreRelease to $NEW_VERSION"
