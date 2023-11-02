@@ -11,12 +11,14 @@ jobs:
     uses: ./.github/workflows/python-build.yaml
 
   python-publish:
+    if: ${{ contains(github.ref, 'main') }}
     uses: ./.github/workflows/python-publish.yaml
     needs: python-build
     secrets:
       PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
 
   python-versioning-commit:
+    if: ${{ contains(github.ref, 'main') }}
     uses: ./.github/workflows/python-versioning-commit.yaml
     needs: python-publish
     secrets:
