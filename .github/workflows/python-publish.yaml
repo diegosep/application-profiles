@@ -1,0 +1,27 @@
+name: Python Build
+
+on:
+  workflow_call:
+    secrets:
+      PYPI_PASSWORD:
+        required: true
+
+jobs:
+  python-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          cache: "pip"
+
+      - name: Run image
+        uses: abatilo/actions-poetry@v2
+
+      - name: Publish
+        run: make publish
+        env:
+          PYPI_PASSWORD: ${{ inputs.PYPI_PASSWORD }}

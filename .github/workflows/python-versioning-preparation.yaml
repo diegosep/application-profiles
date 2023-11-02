@@ -16,11 +16,8 @@ jobs:
           python-version: '3.10'
           cache: 'pip'
       
-      - name: Run image
+      - name: Poetry
         uses: abatilo/actions-poetry@v2
-      
-      - name: Install dependencies
-        run: make install
 
       - name: Publish PreRelease
         if: github.ref != 'refs/heads/main'
