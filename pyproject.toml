@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "application-profiles"
-version = "0.1.10"
+version = "0.1.11a0"
 description = "This project brings (at least partially) the ability of providing properties files like Spring Framework but now in whatever Python context."
 authors = ["Diego Sepulveda"]
 readme = "README.md"
