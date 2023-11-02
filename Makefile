@@ -39,13 +39,6 @@ security:
 	poetry run safety check -r requirements.txt --output screen
 	rm -rf requirements.txt || true
 
-.PHONY: publish-prerelease
-publish-prerelease:
-	poetry version prerelease
-	poetry build --format wheel
-	poetry config pypi-token.pypi ${PYPI_PASSWORD}
-	poetry publish
-
 .PHONY: publish-release
 publish-release:
 	poetry version minor

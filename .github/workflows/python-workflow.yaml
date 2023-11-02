@@ -1,0 +1,20 @@
+name: Python Workflow
+
+on: [push]
+
+jobs:
+  python-versioning-preparation:
+    uses: ./.github/workflows/python-versioning-preparation.yaml
+  
+  python-build:
+    uses: ./.github/workflows/python-build.yaml
+    secrets:
+      CICD_GIT_TOKEN: ${{ secrets.CICD_GIT_TOKEN }}
+      PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+  
+  python-release:
+    uses: ./.github/workflows/python-release.yaml
+    needs: python-build
+    secrets:
+      CICD_GIT_TOKEN: ${{ secrets.CICD_GIT_TOKEN }}
+      PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}

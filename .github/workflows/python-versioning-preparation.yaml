@@ -1,0 +1,31 @@
+name: Python Release
+
+on:
+  workflow_call:
+
+jobs:
+  python-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+      
+      - name: Run image
+        uses: abatilo/actions-poetry@v2
+      
+      - name: Install dependencies
+        run: make install
+
+      - name: Publish PreRelease
+        if: github.ref != 'refs/heads/main'
+        run: poetry version prerelease
+      
+      - name: Publish Release
+        if: github.ref == 'refs/heads/main'
+        run: poetry version minor

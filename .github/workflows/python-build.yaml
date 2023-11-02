@@ -1,6 +1,7 @@
 name: Python Build
 
-on: [push]
+on:
+  workflow_call:
 
 jobs:
   python-build:
@@ -32,10 +33,3 @@ jobs:
         with:
           name: pytest-results
           path: reports/junit.xml
-      
-  python-release:
-    uses: ./.github/workflows/python-release.yaml
-    needs: python-build
-    secrets:
-      CICD_GIT_TOKEN: ${{ secrets.CICD_GIT_TOKEN }}
-      PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}

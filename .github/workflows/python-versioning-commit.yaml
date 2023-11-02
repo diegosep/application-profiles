@@ -26,21 +26,6 @@ jobs:
       - name: Run image
         uses: abatilo/actions-poetry@v2
       
-      - name: Install dependencies
-        run: make install
-
-      - name: Publish PreRelease
-        if: github.ref != 'refs/heads/main'
-        env:
-          PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-        run: make publish-prerelease
-      
-      - name: Publish Release
-        if: github.ref == 'refs/heads/main'
-        env:
-          PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-        run: make publish-release
-      
       - name: Configure git
         run: |
           git config --global user.name 'CICD'
@@ -58,6 +43,12 @@ jobs:
           export NEW_VERSION=$(poetry version -s)
           git commit -am "[skip ci] Prepatching to $NEW_VERSION"
       
+      - name: Tagging
+        if: github.ref == 'refs/heads/main'
+        run: |
+          export NEW_VERSION=$(poetry version -s)
+          git tag -a $NEW_VERSION -m $NEW_VERSION
+
       - name: Push results
         run: |
           git push "https://$GITHUB_ACTOR:${{ secrets.CICD_GIT_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
