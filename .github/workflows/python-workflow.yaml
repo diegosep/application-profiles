@@ -17,7 +17,7 @@ jobs:
       PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
 
   python-versioning-commit:
-    uses: ./.github/workflows/python-release.yaml
+    uses: ./.github/workflows/python-versioning-commit.yaml
     needs: python-publish
     secrets:
       CICD_GIT_TOKEN: ${{ secrets.CICD_GIT_TOKEN }}
