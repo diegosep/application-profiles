@@ -9,13 +9,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Remove pre views config
-        run: rm pyproject.toml
-      
       - uses: actions/download-artifact@v3
         with:
           name: pyproject
-          path: pyproject.toml
       
       - name: Set up Python
         uses: actions/setup-python@v4
