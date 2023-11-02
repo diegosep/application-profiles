@@ -24,4 +24,4 @@ jobs:
       - name: Publish
         run: make publish
         env:
-          PYPI_PASSWORD: ${{ inputs.PYPI_PASSWORD }}
+          PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
